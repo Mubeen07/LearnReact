@@ -7,6 +7,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import User from "./views/Users";
+import Posts from "./views/Posts";
 const Home = lazy(() => import("./views/Home.js"));
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
                   <li>
                     <Link to="/user">User</Link>
                   </li>
+                  <li>
+                    <Link to="/post">Post</Link>
+                  </li>
                 </ul>
               </nav>
               <img src={logo} className="App-logo" alt="logo" />
@@ -31,6 +35,7 @@ function App() {
 
             <Switch>
               <Route path="/user" exact render={() => <User />} />
+              <Route path="/post" exact render={() => <Posts />} />
               <Route path="/" render={() => <Home />} />
             </Switch>
           </div>

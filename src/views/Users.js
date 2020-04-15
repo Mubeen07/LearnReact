@@ -48,7 +48,7 @@ const User = () => {
           <button onClick={() => setSelectedUser(null)}>
             <h2>Back to List</h2>
           </button>
-          <UserDetail SelectedUser={selectedUser} />
+                  <UserDetail SelectedUser={selectedUser} />
         </div>
       ) : (
         <ol>
