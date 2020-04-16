@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as UserActions from "../actions/useractions";
+import {Button, Card, ListGroup, ListGroupItem} from 'react-bootstrap'
+import {Link} from "react-router-dom";
+import logo from "../logo.svg";
 
 function getUsers() {
   return axios.get("https://jsonplaceholder.typicode.com/users");
 }
-
 const UserDetail = ({ SelectedUser }) => (
-  <div>
-    <h2>{SelectedUser.id}</h2>
-    <p>Username: {SelectedUser.username}</p>
-    <h3>{SelectedUser.name}</h3>
-    <h3>Address</h3>
+  <div style={{textAlign:'left'}}>
+   <Card bg="dark" >
+    <Card.Title style={{textAlign:'center'}}>UserID :{SelectedUser.id}</Card.Title>
+       <span>User Name: {SelectedUser.username}</span>
+       <span>Name: {SelectedUser.name}</span>
+    <h4>Address</h4>
     <ul>
       <li>
         Street: {SelectedUser.address.street}, Suite:{" "}
@@ -23,12 +26,14 @@ const UserDetail = ({ SelectedUser }) => (
         {SelectedUser.address.zipcode}
       </li>
     </ul>
+   </Card>
   </div>
 );
 
 const User = () => {
   const [dataList, setDataList] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+
+    const [selectedUser, setSelectedUser] = useState(null);
 
   const dispatch = useDispatch();
   const { SelectedUserRecord } = useSelector(state => state.UsersReducer);
@@ -41,21 +46,27 @@ const User = () => {
     });
   }, []);
 
-  return (
+
+    return (
+        <div className="App">
+            <h2 >User's List</h2>
     <div className="App-header">
+
       {selectedUser ? (
         <div>
-          <button onClick={() => setSelectedUser(null)}>
-            <h2>Back to List</h2>
-          </button>
+          <Button  variant="secondary" onClick={() => setSelectedUser(null)}>
+            Back to List
+          </Button>
+            <Link to={`/userposts`}>
+            <Button variant="info" >My Posts</Button></Link>
                   <UserDetail SelectedUser={selectedUser} />
         </div>
       ) : (
-        <ol>
+          <ListGroup as="ul"  >
           {dataList.map(data => {
             console.info(data);
             return (
-              <li
+              <ListGroupItem variant="dark"
                 key={data.id}
                 onClick={() => {
                   const { selectUser } = UserActions;
@@ -63,13 +74,14 @@ const User = () => {
                   setSelectedUser(data);
                 }}
               >
-                <h2>{data.name}</h2>
-              </li>
+                <h3>{data.name}</h3>
+              </ListGroupItem>
             );
           })}
-        </ol>
+          </ListGroup>
       )}
     </div>
+        </div>
   );
 };
 

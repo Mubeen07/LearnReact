@@ -8,6 +8,8 @@ import "./App.css";
 
 import User from "./views/Users";
 import Posts from "./views/Posts";
+import NavbarComponent from "./views/NavbarComponent";
+import UserPosts from "./views/UserPosts";
 const Home = lazy(() => import("./views/Home.js"));
 
 function App() {
@@ -15,25 +17,10 @@ function App() {
     <Provider store={appStore}>
       <Suspense fallback={<div />}>
         <Router>
-          <div>
-            <header className="App-header">
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/user">User</Link>
-                  </li>
-                  <li>
-                    <Link to="/post">Post</Link>
-                  </li>
-                </ul>
-              </nav>
-              <img src={logo} className="App-logo" alt="logo" />
-            </header>
-
+          <div className="App">
+            <NavbarComponent/>
             <Switch>
+              <Route path="/userposts" exact render={()=> <UserPosts/>}/>
               <Route path="/user" exact render={() => <User />} />
               <Route path="/post" exact render={() => <Posts />} />
               <Route path="/" render={() => <Home />} />
