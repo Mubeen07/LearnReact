@@ -5,18 +5,24 @@ import * as UserPostsActions from "../actions/userPostsActions";
 import {ListGroup, ListGroupItem} from "react-bootstrap";
 
 function getUserPosts() {
-    return axios.get("https://jsonplaceholder.typicode.com/posts?userId=1");
+    return axios.get("https://jsonplaceholder.typicode.com/posts?userId=${id}");
 }
 
 const UserPosts = () => {
     const [dataList, setDataList] = useState([]);
 
+    const [selectedUser, setSelectedUser] = useState(null);
+
     const dispatch = useDispatch();
     const { SelectedUserPostsRecord } = useSelector(state => state.UserPostReducer);
     console.log(SelectedUserPostsRecord)
 
+    const {SelectedUserRecord} = useSelector(state => state.UsersReducer)
+
+
     useEffect(() => {
-        getUserPosts().then(data => {
+
+        getUserPosts(SelectedUserRecord.id).then(data => {
             setDataList(data.data);
         });
 
