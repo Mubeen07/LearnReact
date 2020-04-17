@@ -10,6 +10,7 @@ import User from "./views/Users";
 import Posts from "./views/Posts";
 import NavbarComponent from "./views/NavbarComponent";
 import UserPosts from "./views/UserPosts";
+import AddPost from "./views/AddPost";
 const Home = lazy(() => import("./views/Home.js"));
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <NavbarComponent/>
             <Switch>
               <Route path="/userposts" exact render={()=> <UserPosts/>}/>
+              <Route path="/addpost" exact render={()=> <AddPost/>}/>
               <Route path="/user" exact render={() => <User />} />
               <Route path="/post" exact render={() => <Posts />} />
               <Route path="/" render={() => <Home />} />

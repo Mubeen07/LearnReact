@@ -20,3 +20,9 @@
 .App-link {
   color: #09d3ac;
 }
+
+.form {
+  max-width: 780px;
+  padding: 15px;
+  margin: auto;
+}

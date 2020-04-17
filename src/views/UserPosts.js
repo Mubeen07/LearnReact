@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import * as UserPostsActions from "../actions/userPostsActions";
-import {ListGroup, ListGroupItem} from "react-bootstrap";
+import {Button, ListGroup, ListGroupItem} from "react-bootstrap";
+import {Link, useHistory} from "react-router-dom";
 
-function getUserPosts() {
-    return axios.get("https://jsonplaceholder.typicode.com/posts?userId=${id}");
+function getUserPosts(userId) {
+    return axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
 }
 
 const UserPosts = () => {
     const [dataList, setDataList] = useState([]);
+
+    const history=useHistory();
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -21,13 +24,20 @@ const UserPosts = () => {
 
 
     useEffect(() => {
-
+        if (SelectedUserRecord){
+        console.log(SelectedUserRecord)
         getUserPosts(SelectedUserRecord.id).then(data => {
             setDataList(data.data);
-        });
+        });} else{
+            history.push('/user')
+        }
 
-    }, []);
+    }, [SelectedUserRecord]);
     return (
+        <div>
+            <Link to={"/addpost"}>
+            <Button variant="secondary">Add a Post</Button>
+            </Link>
         <div className="App-header">
 
                 <ListGroup as="ul">
@@ -49,6 +59,7 @@ const UserPosts = () => {
                     })}
                 </ListGroup>
 
+        </div>
         </div>
     );
 };
