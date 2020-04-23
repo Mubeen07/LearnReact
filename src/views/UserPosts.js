@@ -20,6 +20,7 @@ const UserPosts = () => {
     const { SelectedUserPostsRecord } = useSelector(state => state.UserPostReducer);
     console.log(SelectedUserPostsRecord)
 
+
     const {SelectedUserRecord} = useSelector(state => state.UsersReducer)
 
 

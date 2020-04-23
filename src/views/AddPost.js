@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {addPost} from "../actions/addPostActions";
 class AddPost extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             title: '',
             body: ''
         }
-    }
+    };
+
 
     changeHandler = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -21,13 +23,14 @@ class AddPost extends Component {
             .post('https://jsonplaceholder.typicode.com/posts', this.state)
             .then(response => {
                 console.log(response)
+                addPost(response)
             })
             .catch(error => {
                 console.log(error)
             })
-    }
+    };
 
-    render() {
+render() {
         const {title, body } = this.state
         return (
             <div>
@@ -50,4 +53,12 @@ class AddPost extends Component {
     }
 }
 
-export default AddPost
+const mapDispatchToProps = dispatch =>{
+    return{
+        addPost: ()=>dispatch(addPost())
+    }
+}
+
+export default connect(null,
+    mapDispatchToProps()
+)(AddPost)
