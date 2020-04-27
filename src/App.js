@@ -6,7 +6,7 @@ import { appStore } from "./reducer/AppStore";
 import logo from "./logo.svg";
 import "./App.css";
 
-import { signInWithGoogle, auth } from './firebase/firebase'
+import { signInWithGoogle, auth } from "./firebase/firebase";
 
 import User from "./views/Users";
 import Posts from "./views/Posts";
@@ -16,38 +16,41 @@ import AddPost from "./views/AddPost";
 import Loading from "./common/Loading";
 const Home = lazy(() => import("./views/Home.js"));
 
-
 function App() {
-  const [idToken, setIdToken]= useState(null)
+  const [idToken, setIdToken] = useState(null);
   function signIn() {
-    signInWithGoogle()
+    signInWithGoogle();
   }
 
   function signOut() {
-    auth.signOut()
+    auth.signOut();
   }
 
-  useEffect(()=> {
-    auth.onAuthStateChanged(async nextUser=> {
-      console.log("currentUser changed to: ", nextUser)
+  useEffect(() => {
+    auth.onAuthStateChanged(async (nextUser) => {
+      console.log("currentUser changed to: ", nextUser);
 
-      if(auth.currentUser){
-        setIdToken(await auth.currentUser.getIdToken())
+      if (auth.currentUser) {
+        setIdToken(await auth.currentUser.getIdToken());
       } else {
-        setIdToken(null)
+        setIdToken(null);
       }
-      console.log("idToken changed to: ", idToken)
-    })
-  }, [])
-  
+      console.log("idToken changed to: ", idToken);
+    });
+  }, [idToken]);
+
   return (
     <Provider store={appStore}>
-      <Suspense fallback={<div />}>
+      <Suspense fallback={<Loading loading={true} />}>
         <Router>
           <div className="App">
-            <NavbarComponent/>
+            <NavbarComponent />
 
-            <p>{auth.currentUser ? auth.currentUser.displayName + " is signed in" : "Please sign in"}</p>
+            <p>
+              {auth.currentUser
+                ? auth.currentUser.displayName + " is signed in"
+                : "Please sign in"}
+            </p>
 
             <button onClick={signIn}>Sign in with Google</button>
             <button onClick={signOut}>Sign me out</button>
@@ -55,10 +58,9 @@ function App() {
             <p>The ID token is:</p>
             <code>{auth.currentUser ? idToken : "Please sign in"}</code>
 
-
             <Switch>
-              <Route path="/userposts" exact render={()=> <UserPosts/>}/>
-              <Route path="/addpost" exact render={()=> <AddPost/>}/>
+              <Route path="/userposts" exact render={() => <UserPosts />} />
+              <Route path="/addpost" exact render={() => <AddPost />} />
               <Route path="/user" exact render={() => <User />} />
               <Route path="/post" exact render={() => <Posts />} />
               <Route path="/" render={() => <Home />} />
