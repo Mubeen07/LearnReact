@@ -13,6 +13,7 @@ import Posts from "./views/Posts";
 import NavbarComponent from "./views/NavbarComponent";
 import UserPosts from "./views/UserPosts";
 import AddPost from "./views/AddPost";
+import Loading from "./common/Loading";
 const Home = lazy(() => import("./views/Home.js"));
 
 

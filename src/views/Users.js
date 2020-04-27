@@ -5,6 +5,7 @@ import * as UserActions from "../actions/useractions";
 import {Button, Card, ListGroup, ListGroupItem} from 'react-bootstrap'
 import {Link} from "react-router-dom";
 import logo from "../logo.svg";
+import Loading from "../common/Loading";
 
 function getUsers() {
   return axios.get("https://jsonplaceholder.typicode.com/users");
@@ -30,7 +31,7 @@ const UserDetail = ({ SelectedUser }) => (
   </div>
 );
 
-const User = () => {
+const User = ({loading}) => {
   const [dataList, setDataList] = useState([]);
 
     const [selectedUser, setSelectedUser] = useState(null);
@@ -41,6 +42,7 @@ const User = () => {
   console.log(SelectedUserRecord);
 
   useEffect(() => {
+        loading= true;
     getUsers().then(data => {
       setDataList(data.data);
     });
